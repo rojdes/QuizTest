@@ -43,8 +43,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initPlayers() {
-        mMyPlayerObservable = RxView.clickEvents(mbtnUserAnswer)/*.observeOn(AndroidSchedulers.mainThread())*/;
-       mMyPlayerObservable =  PlayerObservableCase.upgradeCurrent(mMyPlayerObservable, PlayerCase.getMe());
+        mMyPlayerObservable =  PlayerObservableCase.upgradeCurrent(RxView.clickEvents(mbtnUserAnswer), PlayerCase.getMe());
     }
 
     private void findViews() {
@@ -62,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
                 startGame();
             }
         });
-
     }
 
     public void startGame() {
@@ -87,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         Observable<Long> timer = Observable.interval(0, 1000, TimeUnit.MILLISECONDS, sc);
+        //if i use something like for() ...{ mergeWith } it doesn't want to work
+
        timer.mergeWith(PlayerObservableCase.newInstance(PlayerCase.getNewPlayer("player_0"), null)).
               mergeWith(PlayerObservableCase.newInstance(PlayerCase.getNewPlayer("player_1"), null)).
               mergeWith(PlayerObservableCase.newInstance(PlayerCase.getNewPlayer("player_2"), null)).

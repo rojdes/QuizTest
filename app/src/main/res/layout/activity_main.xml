@@ -129,6 +129,4 @@
             android:textSize="18dp"
             android:id="@+id/restart" />
     </LinearLayout>
-
-
 </RelativeLayout>
