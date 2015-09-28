@@ -11,6 +11,7 @@ import com.usinformatic.rxexample.models.Player;
 import com.usinformatic.rxexample.models.enums.PlayerType;
 import com.usinformatic.rxexample.repo.PlayerCase;
 import com.usinformatic.rxexample.repo.PlayerObservableCase;
+import com.usinformatic.rxexample.repo.QuestionCase;
 import com.usinformatic.rxexample.utils.Logs;
 
 import java.util.concurrent.TimeUnit;
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         mbtnRestart.setEnabled(false);
         mbtnUserAnswer.setEnabled(true);
         mtvTimer.setText("10");
+        mtvQuestion.setText(QuestionCase.getNewQuestion());
         ((TextView)findViewById(R.id.player_0)).setText("");
         ((TextView)findViewById(R.id.player_1)).setText("");
         ((TextView)findViewById(R.id.player_2)).setText("");
