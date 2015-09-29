@@ -6,21 +6,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.usinformatic.rxexample.R;
 import com.usinformatic.rxexample.models.Player;
+import com.usinformatic.rxexample.models.RoundResponse;
 import com.usinformatic.rxexample.models.enums.OptionState;
 
 public class MainActivity extends AppCompatActivity implements IQuizChatView {
 
 
-
-
+    private static final String TAG = MainActivity.class.getSimpleName();
     private TextView mtvTimer,mtvQuestion;
 //    private  View mvRoot;
     private Button mbtnRestart;
     private Button mbtnFirstOption,mbtnSecondOption,mbtnThirdOption;
     private ChatPresenter mPresenter;
+
 
 
     @Override
@@ -32,37 +34,25 @@ public class MainActivity extends AppCompatActivity implements IQuizChatView {
         mPresenter=new ChatPresenter(this,this);
     }
 
-    private void initPlayers() {
-//
-//        mMyPlayerObservable = Observable.interval(0, MAX_TIME, TimeUnit.SECONDS);
-//        mMyPlayerObservable.subscribe(playerSub);
-         //PlayerObservableCase.upgradeCurrent(RxView.clickEvents(mbtnUserAnswer), PlayerCase.getMe());
-    }
-
     private void findViews() {
         mbtnRestart=(Button)findViewById(R.id.restart);
         mbtnFirstOption=(Button)findViewById(R.id.option_1);
         mbtnSecondOption=(Button)findViewById(R.id.option_2);
         mbtnThirdOption=(Button)findViewById(R.id.option_3);
-//        mvRoot=getWindow().getDecorView().findViewById(android.R.id.content);
         mtvTimer=(TextView)findViewById(R.id.timer);
         mtvQuestion=(TextView)findViewById(R.id.question);
     }
 
     private void initViews(){
-//        mbtnRestart.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    startGame();
-//                }
-//        });
-//        mbtnUserAnswer.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Player p= PlayerCase.getMe();
-////                timerSubscriber.onNext(p);
-//            }
-//        });
+        View.OnClickListener mOptionClickListener=new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionClick(v);
+            }
+        };
+        mbtnFirstOption.setOnClickListener(mOptionClickListener);
+        mbtnSecondOption.setOnClickListener(mOptionClickListener);
+        mbtnThirdOption.setOnClickListener(mOptionClickListener);
     }
 
     private void onOptionClick(View v){
@@ -116,13 +106,24 @@ public class MainActivity extends AppCompatActivity implements IQuizChatView {
     }
 
     @Override
-    public void updateTime(String value) {
+    public void updateTime(final String value) {
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                mtvTimer.setText(value);
+//            }
+//        });
         mtvTimer.setText(value);
+
     }
 
     @Override
-    public void showResult() {
-
+    public void showResult(RoundResponse  player, RoundResponse opponent) {
+        if(player!=null)
+            Toast.makeText(MainActivity.this,player.toString(),Toast.LENGTH_LONG);
+        if(opponent!=null)
+           Toast.makeText(MainActivity.this,opponent.toString(),Toast.LENGTH_LONG);
+        mPresenter.nextQuiz();
     }
 
     @Override

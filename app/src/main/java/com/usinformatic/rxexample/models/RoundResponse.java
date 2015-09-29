@@ -14,4 +14,14 @@ public class RoundResponse {
     public int selectedOption;
 
     public long timeTook;
+
+    @Override
+    public String toString() {
+        return "RoundResponse{" +
+                "player=" + player +
+                ", roundId='" + roundId + '\'' +
+                ", selectedOption=" + selectedOption +
+                ", timeTook=" + timeTook +
+                '}';
+    }
 }

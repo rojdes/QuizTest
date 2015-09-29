@@ -1,6 +1,7 @@
 package com.usinformatic.rxexample.ui.chat;
 
 import com.usinformatic.rxexample.models.Player;
+import com.usinformatic.rxexample.models.RoundResponse;
 import com.usinformatic.rxexample.models.enums.OptionState;
 
 /**
@@ -20,7 +21,7 @@ public interface IQuizChatView {
 
         public void updateTime(String value);
 
-        public void showResult(/*?????*/);
+        public void showResult(RoundResponse player, RoundResponse opponent);
 
         public void showMessageDialog(String title, String message);
 

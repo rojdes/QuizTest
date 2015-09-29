@@ -3,12 +3,16 @@ package com.usinformatic.rxexample.cases;
 import android.util.Log;
 
 import com.usinformatic.rxexample.models.Player;
+import com.usinformatic.rxexample.models.Round;
+import com.usinformatic.rxexample.models.RoundResponse;
+import com.usinformatic.rxexample.utils.Logs;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -41,6 +45,34 @@ public class PlayerObservableCase {
             @Override
             public void call(Object aLong) {
                 //Logs.err("opponent call ");
+            }
+        });
+        return opponent;
+    }
+
+    public static Observable newInstance(final Player player, final Round round){
+        if(player==null) return null;
+        //Log.e(TAG, player.toString());
+        final int timeTook=new Random().nextInt((int) (round.timeOut-1000))+1000;
+        Log.e(TAG, "timeTook = " + timeTook);
+        Observable<Long> opponent =  Observable.timer(timeTook, TimeUnit.MILLISECONDS,  Schedulers.computation());
+        opponent=opponent.map(new Func1() {
+            @Override
+            public Object call(Object o) {
+                //              Log.e(TAG, "======call====");
+                RoundResponse r=  new RoundResponse();
+                r.player=player;
+                r.selectedOption=new Random().nextInt(round.options.length);
+                r.timeTook=timeTook;
+                return r;
+            }
+        });
+        opponent.observeOn(AndroidSchedulers.mainThread());
+//        opponent.observeOn(scheduler);
+        opponent.subscribe(new Action1() {
+            @Override
+            public void call(Object aLong) {
+                Logs.err("opponent call " +aLong.toString());
             }
         });
         return opponent;
