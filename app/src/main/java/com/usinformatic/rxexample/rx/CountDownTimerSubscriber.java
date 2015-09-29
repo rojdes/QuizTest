@@ -58,7 +58,8 @@ public abstract class CountDownTimerSubscriber extends Subscriber {
 
     private void updateTimeOrStop(Long current){
         if(maxTimeSec<0){
-            this.onNext(new String("ok"));
+            //this.onNext(new String("ok"));
+            this.unsubscribe();
             return;
         }
         final long time=(maxTimeSec - current - 1);
