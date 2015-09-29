@@ -9,7 +9,7 @@ import rx.Subscriber;
  */
 class ChatPresenter {
 
-    private IChatView mChatView;
+    private IQuizChatView mChatView;
     private final Subscriber mTimeSubscriber=new Subscriber() {
         @Override
         public void onCompleted() {
@@ -32,7 +32,7 @@ class ChatPresenter {
 
 
 
-    public ChatPresenter(IChatView view){
+    public ChatPresenter(IQuizChatView view){
        mChatView=view;
 
     }
