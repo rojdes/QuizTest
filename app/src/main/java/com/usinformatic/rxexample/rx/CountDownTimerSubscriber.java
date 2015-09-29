@@ -48,6 +48,7 @@ public abstract class CountDownTimerSubscriber extends Subscriber {
             updateTimeOrStop((Long) o);
             return;
         }
+
 //        Log.e(TAG, "is " + o + "  ");
         sendAction(false, o);
     }
@@ -60,7 +61,7 @@ public abstract class CountDownTimerSubscriber extends Subscriber {
         final long time=(maxTimeSec - current - 1);
         Logs.err("time now = " + time);
         if(time<=0){
-            stopTimer();
+            //sendError(new TimeEndedException());
             sendAction(true, null);
         }
         else{
