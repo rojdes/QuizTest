@@ -12,13 +12,7 @@ public class Player {
 
     public String name;
 
-    public String answer;
-
-    public Comment comment;
-
     public PlayerType role;
-
-    public long timeMs;
 
 
     @Override
@@ -26,10 +20,7 @@ public class Player {
         return "Player{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", answer='" + answer + '\'' +
-                ", comment=" + comment +
                 ", role=" + role +
-                ", timeMs=" + timeMs +
                 '}';
     }
 }
