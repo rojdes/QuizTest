@@ -5,7 +5,9 @@ package com.usinformatic.rxexample.models;
  */
 public class RoundResponse {
 
-    public String userId;
+    //public String userId;
+
+    public Player player;
 
     public String roundId;
 

@@ -53,9 +53,11 @@ public abstract class CountDownTimerSubscriber extends Subscriber {
             throw new TimeEndedException();
         }
         else{
-            onAction(false, time);
+            time(time);
         }
     }
+
+    public abstract void time(long time);
 
     public abstract void onAction(boolean completed, Object o);
 

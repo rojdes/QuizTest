@@ -19,6 +19,18 @@ public class Round {
     public long timeOut;
 
 
+    public Round(){}
+
+    public Round (String id, String question, String [] options, int rightOption,long timeOut){
+        this.id=id;
+        this.question=question;
+        this.options=options;
+        this.rightOption=rightOption;
+        this.timeOut=timeOut;
+
+    }
+
+
 
 
 }
