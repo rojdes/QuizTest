@@ -31,9 +31,9 @@ public abstract class CountDownTimerSubscriber extends Subscriber {
 
     @Override
     public void onError(Throwable e) {
+        Logs.err("timer  timeEndedException");
         if(e instanceof TimeEndedException){
-            Logs.err("timer  timeEndedException");
-            onAction(true, null);
+            //onAction(true, null);
             return;
         }
 //        Logs.err("timer" + e.toString());
@@ -44,6 +44,9 @@ public abstract class CountDownTimerSubscriber extends Subscriber {
     @Override
     public void onNext(final Object o) {
         if(o==null) return;
+        if(o instanceof String){
+            throw new TimeEndedException();
+        }
         if(o instanceof Long){
             updateTimeOrStop((Long) o);
             return;
@@ -55,18 +58,16 @@ public abstract class CountDownTimerSubscriber extends Subscriber {
 
     private void updateTimeOrStop(Long current){
         if(maxTimeSec<0){
-            stopTimer();
+            this.onNext(new String("ok"));
             return;
         }
         final long time=(maxTimeSec - current - 1);
         Logs.err("time now = " + time);
         if(time<=0){
-            //sendError(new TimeEndedException());
             sendAction(true, null);
-        }
-        else{
+            stopTimer();
+        }else{
            sendTime(time);
-
         }
     }
 
@@ -106,7 +107,6 @@ public abstract class CountDownTimerSubscriber extends Subscriber {
 
     public void stopTimer(){
        maxTimeSec=-1;
-       unsubscribe();
        //onAction(true, null);
     }
 
