@@ -9,12 +9,10 @@ import android.widget.TextView;
 import com.usinformatic.rxexample.AppConsts;
 import com.usinformatic.rxexample.R;
 import com.usinformatic.rxexample.cases.PlayerCase;
-import com.usinformatic.rxexample.cases.PlayerObservableCase;
 import com.usinformatic.rxexample.cases.QuestionCase;
 import com.usinformatic.rxexample.models.Player;
 import com.usinformatic.rxexample.models.enums.PlayerType;
-import com.usinformatic.rxexample.rx.exceptions.TimeEndedException;
-import com.usinformatic.rxexample.utils.Logs;
+import com.usinformatic.rxexample.rx.CountDownTimerSubscriber;
 
 import java.util.concurrent.TimeUnit;
 
@@ -75,24 +73,44 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    final Subscriber timerSubscriber = new Subscriber() {
+    final CountDownTimerSubscriber timerSubscriber = new CountDownTimerSubscriber(MAX_TIME) {
         @Override
-        public void onCompleted() {
-            Logs.err("oncompleted timer");
-            updateViewsOnEndGame();
+        public void onAction(boolean completed, Object o) {
+            if(completed){
+                updateViewsOnEndGame();
+                mtvTimer.setText("Time is over");
+            }else{
+                updateGameProcessWith(this,o);
+            }
+
         }
 
         @Override
-        public void onError(Throwable e) {
-            Logs.err("onerror timer" + e.toString());
-            updateViewsOnEndGame();
-        }
+        public void error(Throwable e) {
 
-        @Override
-        public void onNext(Object o) {
-            updateGameProcessWith(this,o);
         }
     };
+
+
+//
+//            new Subscriber() {
+//        @Override
+//        public void onCompleted() {
+//            Logs.err("oncompleted timer");
+//            updateViewsOnEndGame();
+//        }
+//
+//        @Override
+//        public void onError(Throwable e) {
+//            Logs.err("onerror timer" + e.toString());
+//            updateViewsOnEndGame();
+//        }
+//
+//        @Override
+//        public void onNext(Object o) {
+//            updateGameProcessWith(this,o);
+//        }
+//    };
 
     public void startGame() {
         Scheduler sc=Schedulers.computation();
@@ -103,10 +121,10 @@ public class MainActivity extends AppCompatActivity {
 
 
        timer.
-              mergeWith(PlayerObservableCase.newInstance(PlayerCase.getNewPlayer("player_0"), null)).
-              mergeWith(PlayerObservableCase.newInstance(PlayerCase.getNewPlayer("player_1"), null)).
-              mergeWith(PlayerObservableCase.newInstance(PlayerCase.getNewPlayer("player_2"), null)).
-              mergeWith(PlayerObservableCase.newInstance(PlayerCase.getNewPlayer("player_3"), null)).
+//              mergeWith(PlayerObservableCase.newInstance(PlayerCase.getNewPlayer("player_0"), null)).
+//              mergeWith(PlayerObservableCase.newInstance(PlayerCase.getNewPlayer("player_1"), null)).
+//              mergeWith(PlayerObservableCase.newInstance(PlayerCase.getNewPlayer("player_2"), null)).
+//              mergeWith(PlayerObservableCase.newInstance(PlayerCase.getNewPlayer("player_3"), null)).
          /*mergeWith(mMyPlayerObservable).*/observeOn(AndroidSchedulers.mainThread()).subscribe(timerSubscriber);
       }
 
@@ -135,7 +153,8 @@ public class MainActivity extends AppCompatActivity {
     if( o instanceof Player){
         showResultOfGame((Player) o);
         mtvTimer.setText("--");
-        throw new TimeEndedException();
+//        throw new TimeEndedException();
+        timerSubscriber.stopTimer();
     }
    }
 
@@ -150,13 +169,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateTime(Subscriber sub, Long o) {
         long time=(MAX_TIME - o - 1);
-        if(time<=0){
-            mtvTimer.setText("Time is over");
+//        if(time<=0){
+            //mtvTimer.setText("Time is over");
             //sub.onNext(null); //because of on error and onompletedhas autounsubsribe annd http://bryangilbert.com/blog/2013/11/03/rx-the-importance-of-honoring-unsubscribe/
-            throw new TimeEndedException();
-        }
-        else{
-            mtvTimer.setText("Remaining " + time);
-        }
+ //           throw new TimeEndedException();
+ //       }
+ //       else{
+            mtvTimer.setText("Remaining " + o/*time*/);
+ //       }
     }
 }
