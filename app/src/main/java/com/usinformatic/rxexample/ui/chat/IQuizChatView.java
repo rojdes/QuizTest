@@ -13,7 +13,7 @@ public interface IQuizChatView {
 
         public void resetOptionViews();
 
-        public void setSelectOptions(boolean locked);
+        public void setSelectOptions(boolean enabled);
 
         public void setQuestion(String question);
 

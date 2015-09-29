@@ -91,10 +91,10 @@ public class MainActivity extends AppCompatActivity implements IQuizChatView {
     }
 
     @Override
-    public void setSelectOptions(boolean locked) {
-        mbtnFirstOption.setEnabled(locked);
-        mbtnSecondOption.setEnabled(locked);
-        mbtnThirdOption.setEnabled(locked);
+    public void setSelectOptions(boolean enabled) {
+        mbtnFirstOption.setEnabled(enabled);
+        mbtnSecondOption.setEnabled(enabled);
+        mbtnThirdOption.setEnabled(enabled);
     }
 
     @Override
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements IQuizChatView {
     @Override
     public void showResult(RoundResponse  player, RoundResponse opponent) {
         if(player!=null) {
-            Log.e(TAG,player.toString());
+            Log.e(TAG, player.toString());
             //Toast.makeText(MainActivity.this, player.toString(), Toast.LENGTH_SHORT).show();
         }
         if(opponent!=null) {

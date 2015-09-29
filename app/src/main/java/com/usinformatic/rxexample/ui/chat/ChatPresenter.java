@@ -52,6 +52,7 @@ class ChatPresenter {
         mUserResponse.selectedOption=optionOrder;
         mUserResponse.player=PlayerCase.getMe();
         mUserResponse.roundId=mRoundsLst.get(mCurrentQuizNumber.get()).id;
+        mChatView.setSelectOptions(false);
         updateGameProcessWith(false);
     }
 
@@ -81,6 +82,7 @@ class ChatPresenter {
         }
         Round round=mRoundsLst.get(order);
         mChatView.resetOptionViews();
+        mChatView.setSelectOptions(true);
         mChatView.setOptionsContent(round.options);
         mChatView.setQuestion(round.question);
         Observable<Long> timer = Observable.interval(0, 1000, TimeUnit.MILLISECONDS, Schedulers.computation());
