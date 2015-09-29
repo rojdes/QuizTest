@@ -1,4 +1,4 @@
-package com.usinformatic.rxexample;
+package com.usinformatic.rxexample.ui.chat;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,11 +7,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
+import com.usinformatic.rxexample.AppConsts;
+import com.usinformatic.rxexample.R;
 import com.usinformatic.rxexample.models.Player;
 import com.usinformatic.rxexample.models.enums.PlayerType;
-import com.usinformatic.rxexample.repo.PlayerCase;
-import com.usinformatic.rxexample.repo.PlayerObservableCase;
-import com.usinformatic.rxexample.repo.QuestionCase;
+import com.usinformatic.rxexample.cases.PlayerCase;
+import com.usinformatic.rxexample.cases.PlayerObservableCase;
+import com.usinformatic.rxexample.cases.QuestionCase;
 import com.usinformatic.rxexample.utils.Logs;
 
 import java.util.concurrent.TimeUnit;
@@ -25,7 +27,7 @@ import rx.schedulers.Schedulers;
 public class MainActivity extends AppCompatActivity {
 
 
-    private static final long MAX_TIME =AppConsts.GAME_ROUND_DURATIONms/1000;
+    private static final long MAX_TIME = AppConsts.GAME_ROUND_DURATIONms/1000;
 
     private TextView mtvTimer,mtvQuestion;
     private  View mvRoot;

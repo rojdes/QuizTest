@@ -1,4 +1,4 @@
-package com.usinformatic.rxexample.repo;
+package com.usinformatic.rxexample.cases;
 
 import com.usinformatic.rxexample.AppConsts;
 import com.usinformatic.rxexample.models.Player;

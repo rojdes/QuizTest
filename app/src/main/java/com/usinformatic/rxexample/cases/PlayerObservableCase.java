@@ -1,4 +1,4 @@
-package com.usinformatic.rxexample.repo;
+package com.usinformatic.rxexample.cases;
 
 import android.util.Log;
 
