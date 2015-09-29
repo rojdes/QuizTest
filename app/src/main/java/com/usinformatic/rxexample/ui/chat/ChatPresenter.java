@@ -58,6 +58,7 @@ class ChatPresenter {
 
 
     public void startQuiz(){
+        mCurrentQuizNumber.set(0);
         mChatView.showProgress(StringUtils.getWithFirstCapitalLetter(mContext.getResources().getString(R.string.loading)));
         mRoundsLst= RoundsRepository.newInstance(mContext).getRoundsForQuiz();
         mOpponent= PlayerCase.getNewPlayer();
@@ -83,8 +84,6 @@ class ChatPresenter {
         mChatView.setOptionsContent(round.options);
         mChatView.setQuestion(round.question);
         Observable<Long> timer = Observable.interval(0, 1000, TimeUnit.MILLISECONDS, Schedulers.computation());
-        if(mTimeSubscriber!=null)
-            mTimeSubscriber.stopTimer();
         mTimeSubscriber=initNewTimeSubscriber(round.timeOut);
         timer.mergeWith(PlayerObservableCase.newInstance(mOpponent,round)).observeOn(AndroidSchedulers.mainThread()).subscribe(mTimeSubscriber);
 
@@ -135,8 +134,8 @@ class ChatPresenter {
     private void resetRound() {
         mOpponentResponse=null;
         mUserResponse=null;
-//        if(mTimeSubscriber!=null)
-//            mTimeSubscriber.stopTimer();
+        if(mTimeSubscriber!=null)
+            mTimeSubscriber.stopTimer();
 //        mTimeSubscriber=null;
     }
 

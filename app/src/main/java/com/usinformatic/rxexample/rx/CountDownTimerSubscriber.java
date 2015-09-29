@@ -1,7 +1,6 @@
 package com.usinformatic.rxexample.rx;
 
 import android.os.Handler;
-import android.util.Log;
 
 import com.usinformatic.rxexample.rx.exceptions.TimeEndedException;
 import com.usinformatic.rxexample.utils.Logs;
@@ -37,7 +36,7 @@ public abstract class CountDownTimerSubscriber extends Subscriber {
             onAction(true, null);
             return;
         }
-        Logs.err("timer" + e.toString());
+//        Logs.err("timer" + e.toString());
         error(e);
 
     }
@@ -49,14 +48,18 @@ public abstract class CountDownTimerSubscriber extends Subscriber {
             updateTimeOrStop((Long) o);
             return;
         }
-        Log.e(TAG, "is " + o + "  ");
+//        Log.e(TAG, "is " + o + "  ");
         sendAction(false, o);
     }
 
     private void updateTimeOrStop(Long current){
+        if(maxTimeSec<0){
+            stopTimer();
+            return;
+        }
         final long time=(maxTimeSec - current - 1);
         Logs.err("time now = " + time);
-        if(time<0){
+        if(time<=0){
             stopTimer();
             sendAction(true, null);
         }

@@ -1,12 +1,14 @@
 package com.usinformatic.rxexample.ui.chat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.usinformatic.rxexample.R;
 import com.usinformatic.rxexample.models.Player;
@@ -53,6 +55,12 @@ public class MainActivity extends AppCompatActivity implements IQuizChatView {
         mbtnFirstOption.setOnClickListener(mOptionClickListener);
         mbtnSecondOption.setOnClickListener(mOptionClickListener);
         mbtnThirdOption.setOnClickListener(mOptionClickListener);
+        mbtnRestart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.startQuiz();
+            }
+        });
     }
 
     private void onOptionClick(View v){
@@ -113,11 +121,21 @@ public class MainActivity extends AppCompatActivity implements IQuizChatView {
 
     @Override
     public void showResult(RoundResponse  player, RoundResponse opponent) {
-        if(player!=null)
-            Toast.makeText(MainActivity.this,player.toString(),Toast.LENGTH_LONG).show();
-        if(opponent!=null)
-           Toast.makeText(MainActivity.this,opponent.toString(),Toast.LENGTH_LONG).show();
-        mPresenter.nextQuiz();
+        if(player!=null) {
+            Log.e(TAG,player.toString());
+            //Toast.makeText(MainActivity.this, player.toString(), Toast.LENGTH_SHORT).show();
+        }
+        if(opponent!=null) {
+            Log.e(TAG, opponent.toString());
+            //Toast.makeText(MainActivity.this, opponent.toString(), Toast.LENGTH_SHORT).show();
+        }
+        new AlertDialog.Builder(this).setTitle("item").setMessage("Player = " + String.valueOf(player)+ "\nOpponent = " + String.valueOf(opponent)).setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mPresenter.nextQuiz();
+            }
+        }).create().show();
+
     }
 
     @Override
