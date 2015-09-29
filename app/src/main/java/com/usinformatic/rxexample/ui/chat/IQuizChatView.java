@@ -1,5 +1,6 @@
 package com.usinformatic.rxexample.ui.chat;
 
+import com.usinformatic.rxexample.models.Player;
 import com.usinformatic.rxexample.models.enums.OptionState;
 
 /**
@@ -7,7 +8,7 @@ import com.usinformatic.rxexample.models.enums.OptionState;
  */
 public interface IQuizChatView {
 
-         public void setOptionsContent(String [] options);
+        public void setOptionsContent(String [] options);
 
         public void resetOptionViews();
 
@@ -20,6 +21,17 @@ public interface IQuizChatView {
         public void updateTime(String value);
 
         public void showResult(/*?????*/);
+
+        public void showMessageDialog(String title, String message);
+
+        public void showPlayersInfo(Player me, Player ... opponents);
+
+
+        public void showProgress(String message);
+
+        public void hideProgress();
+
+
 
 
 }

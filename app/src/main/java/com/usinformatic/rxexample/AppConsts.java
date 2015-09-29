@@ -5,6 +5,6 @@ package com.usinformatic.rxexample;
  */
 public interface AppConsts {
 
-    public long GAME_ROUND_DURATIONms= 10000L;
+    public long GAME_ROUND_DURATIONms= 30000L;
 
 }

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.usinformatic.rxexample.models.Player;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -26,8 +27,8 @@ public class PlayerObservableCase {
         if(player==null) return null;
         if(scheduler==null)
             scheduler= Schedulers.computation();
-        Log.e(TAG, player.toString());
-        Observable<Long> opponent =  Observable.timer(player.timeMs, TimeUnit.MILLISECONDS, scheduler);
+        //Log.e(TAG, player.toString());
+        Observable<Long> opponent =  Observable.timer(new Random().nextInt(4000)+6000, TimeUnit.MILLISECONDS, scheduler);
         opponent=opponent.map(new Func1() {
             @Override
             public Object call(Object o) {
