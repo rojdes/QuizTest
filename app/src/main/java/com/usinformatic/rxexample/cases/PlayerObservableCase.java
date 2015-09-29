@@ -64,6 +64,7 @@ public class PlayerObservableCase {
                 r.player=player;
                 r.selectedOption=new Random().nextInt(round.options.length);
                 r.timeTook=timeTook;
+                r.roundId=round.id;
                 return r;
             }
         });

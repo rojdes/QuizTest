@@ -107,12 +107,6 @@ public class MainActivity extends AppCompatActivity implements IQuizChatView {
 
     @Override
     public void updateTime(final String value) {
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                mtvTimer.setText(value);
-//            }
-//        });
         mtvTimer.setText(value);
 
     }
@@ -120,9 +114,9 @@ public class MainActivity extends AppCompatActivity implements IQuizChatView {
     @Override
     public void showResult(RoundResponse  player, RoundResponse opponent) {
         if(player!=null)
-            Toast.makeText(MainActivity.this,player.toString(),Toast.LENGTH_LONG);
+            Toast.makeText(MainActivity.this,player.toString(),Toast.LENGTH_LONG).show();
         if(opponent!=null)
-           Toast.makeText(MainActivity.this,opponent.toString(),Toast.LENGTH_LONG);
+           Toast.makeText(MainActivity.this,opponent.toString(),Toast.LENGTH_LONG).show();
         mPresenter.nextQuiz();
     }
 

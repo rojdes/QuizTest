@@ -51,8 +51,6 @@ public abstract class CountDownTimerSubscriber extends Subscriber {
         }
         Log.e(TAG, "is " + o + "  ");
         sendAction(false, o);
-
-
     }
 
     private void updateTimeOrStop(Long current){

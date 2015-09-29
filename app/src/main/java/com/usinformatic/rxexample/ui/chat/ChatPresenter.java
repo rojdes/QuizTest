@@ -1,7 +1,6 @@
 package com.usinformatic.rxexample.ui.chat;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.usinformatic.rxexample.R;
 import com.usinformatic.rxexample.cases.PlayerCase;
@@ -45,13 +44,14 @@ class ChatPresenter {
     }
 
     public void userClick(int optionOrder){
-        if(mTimeSubscriber==null||mTimeSubscriber.isUnsubscribed()){
-            Log.e(TAG, "is onsubscribed");
-            return;
-        }
+//        if(mTimeSubscriber==null||mTimeSubscriber.isUnsubscribed()){
+//            Log.e(TAG, "is onsubscribed");
+//            return;
+//        }
         mUserResponse= new RoundResponse();
         mUserResponse.selectedOption=optionOrder;
         mUserResponse.player=PlayerCase.getMe();
+        mUserResponse.roundId=mRoundsLst.get(mCurrentQuizNumber.get()).id;
         updateGameProcessWith(false);
     }
 
@@ -83,6 +83,8 @@ class ChatPresenter {
         mChatView.setOptionsContent(round.options);
         mChatView.setQuestion(round.question);
         Observable<Long> timer = Observable.interval(0, 1000, TimeUnit.MILLISECONDS, Schedulers.computation());
+        if(mTimeSubscriber!=null)
+            mTimeSubscriber.stopTimer();
         mTimeSubscriber=initNewTimeSubscriber(round.timeOut);
         timer.mergeWith(PlayerObservableCase.newInstance(mOpponent,round)).observeOn(AndroidSchedulers.mainThread()).subscribe(mTimeSubscriber);
 
@@ -133,15 +135,15 @@ class ChatPresenter {
     private void resetRound() {
         mOpponentResponse=null;
         mUserResponse=null;
-        if(mTimeSubscriber!=null)
-            mTimeSubscriber.stopTimer();
-        mTimeSubscriber=null;
+//        if(mTimeSubscriber!=null)
+//            mTimeSubscriber.stopTimer();
+//        mTimeSubscriber=null;
     }
 
     public void interruptQuiz(){
-        if(!mTimeSubscriber.isUnsubscribed()){
-            mTimeSubscriber.unsubscribe();
-        }
+//        if(!mTimeSubscriber.isUnsubscribed()){
+//            mTimeSubscriber.unsubscribe();
+//        }
         mInerruptedQuiz.set(true);
         mChatView.updateTime("-");
         mChatView.resetOptionViews();
