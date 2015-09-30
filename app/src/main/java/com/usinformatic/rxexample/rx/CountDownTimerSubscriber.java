@@ -60,6 +60,7 @@ public abstract class CountDownTimerSubscriber extends Subscriber {
         if(maxTimeSec<0){
             //this.onNext(new String("ok"));
             this.unsubscribe();
+            mHandler.removeCallbacksAndMessages(null);
             return;
         }
         final long time=(maxTimeSec - current - 1);
